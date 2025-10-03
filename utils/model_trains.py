@@ -336,14 +336,14 @@ class ModelBuilder():
         tree_r = self.model
         fig, ax = plt.subplots(figsize=(10,4))
         print(self.name)
-        if self.name == 'tree':
+        if self.name == 'decision_tree':
             tree.plot_tree(tree_r, max_depth=3, 
                             feature_names=self.features, 
                             rounded=True, 
                             filled=True,
                             precision=2,
                             ax=ax)
-        elif self.name == 'random_forecast':
+        elif self.name == 'random_forest':
             tree_r = tree_r.estimators_[0]
             tree.plot_tree(tree_r, max_depth=3, 
                             feature_names=self.features, 
@@ -435,3 +435,4 @@ class ModelBuilder():
             "Median": np.median(dt)
 
         }
+

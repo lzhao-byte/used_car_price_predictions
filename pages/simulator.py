@@ -106,8 +106,9 @@ if __name__ == "__main__":
     else:
         model = st.session_state.model
         df = model.sim
-        input_col = model.input['x_train'].select_dtypes(include='number')[0].columns[0]
+        input_col = model.input['x_train'].select_dtypes(include='number').columns[0]
         train_data_summary = model.get_data_summary(input_col)
         train_model_perf = model.evaluate()
         simulate(model, df, train_data_summary, train_model_perf, input_col=input_col)
+
 

@@ -205,7 +205,7 @@ class DataPrep:
                 [pl.col(col).fill_null("other") for col in fill_other_cols]
             )
         try:
-            dfc = dfc..with_columns(
+            dfc = dfc.with_columns(
                 pl.col('cylinders').str.replace(" cylinders", "").alias('cylinders')
             ).with_columns(
                 pl.when(pl.col('cylinders')!='other').then(pl.col('cylinders'))
@@ -338,4 +338,5 @@ class DataPrep:
 
 
         
+
 

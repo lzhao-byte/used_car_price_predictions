@@ -24,8 +24,9 @@ def get_snow_session(database, schema, warehouse):
 
 
 def fetch_data(snow_session=None, 
-               table_name="test_used_cars",
-               ref_name="test_ref_make_model",
+               table_name="used_cars",
+               ref_name="make_model",
+               words_name="stop_words",
                use_local=True):
     if use_local:
         try:
@@ -37,10 +38,13 @@ def fetch_data(snow_session=None,
     else:
         df = snow_session.table(table_name).to_pandas()
         ref = snow_session.table(ref_name).to_pandas()
+        words = snow_session.table(words_name).to_pandas()
 
         df = pl.from_pandas(df).rename(str.lower)
         ref = pl.from_pandas(df).rename(str.lower)
+        words = pl.from_pandas(words).rename(str.lower)
     
 
     return df, ref, words
+
 

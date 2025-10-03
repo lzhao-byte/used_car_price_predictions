@@ -28,7 +28,11 @@ def fetch_data(snow_session=None,
                ref_name="test_ref_make_model",
                use_local=True):
     if use_local:
-        df = pl.read_csv("data/vehicles.csv")
+        if use_local:
+        try:
+            df = pl.read_parquet("data/vehicles.parquet")
+        except:
+            df = pl.scan_parquet("data/**/*.parquet", hive_partitioning=True).collect()
         ref = pl.read_csv("data/make_model.csv")
         words = pl.read_csv("data/words.csv")
     else:
@@ -38,4 +42,5 @@ def fetch_data(snow_session=None,
         df = pl.from_pandas(df).rename(str.lower)
         ref = pl.from_pandas(df).rename(str.lower)
     
+
     return df, ref, words

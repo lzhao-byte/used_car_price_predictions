@@ -40,7 +40,7 @@ def simulate(model, df, train_data_summary, train_model_perf, input_col):
         st.session_state.running = False
         update_data_model(data_container, model_container, stats_container,
                           train_data_summary,train_model_perf,
-                           df, model, model.target, input_col, st.session_state.slider_value)
+                           df, model, model.target, st.session_state.slider_value, input_col)
     if right.button("Reset Animation"):
         st.session_state.running = False
         st.session_state.slider_value = 0
@@ -57,7 +57,7 @@ def simulate(model, df, train_data_summary, train_model_perf, input_col):
             st.session_state.slider_value = i
             update_data_model(data_container, model_container, stats_container,
                               train_data_summary,train_model_perf,
-                              df, model, model.target, input_col, st.session_state.slider_value)
+                              df, model, model.target, st.session_state.slider_value, input_col)
             time.sleep(2) # Control animation speed
         
         # Reset running state if animation completes
@@ -110,6 +110,7 @@ if __name__ == "__main__":
         train_data_summary = model.get_data_summary(model.input['x_train'][input_col])
         train_model_perf = model.evaluate()
         simulate(model, df, train_data_summary, train_model_perf, input_col=input_col)
+
 
 
 

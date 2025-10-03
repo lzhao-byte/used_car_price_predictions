@@ -335,6 +335,7 @@ class ModelBuilder():
     def _plot_tree(self):
         tree_r = self.model
         fig, ax = plt.subplots(figsize=(10,4))
+        print(self.name)
         if self.name == 'tree':
             tree.plot_tree(tree_r, max_depth=3, 
                             feature_names=self.features, 
@@ -432,4 +433,5 @@ class ModelBuilder():
             "Max Value": np.max(dt),
             "Min Value": np.min(dt),
             "Median": np.median(dt)
+
         }

@@ -106,6 +106,8 @@ if __name__ == "__main__":
     else:
         model = st.session_state.model
         df = model.sim
-        train_data_summary = model.get_data_summary(model.input['x_train']['odometer'])
+        num_cols = model.input['x_train'].select(include='number')
+        train_data_summary = model.get_data_summary(num_cols[num_cols.columns[0]])
         train_model_perf = model.evaluate()
         simulate(model, df, train_data_summary, train_model_perf)
+

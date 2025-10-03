@@ -214,7 +214,7 @@ class DataPrep:
             )
         except:
             dfc = dfc.with_columns(
-                pl.col('cylinders').full_null(pl.col('cylinders').drop_nulls().mode())
+                pl.col('cylinders').fill_null(pl.col('cylinders').drop_nulls().mode())
             )
                 
        
@@ -338,5 +338,6 @@ class DataPrep:
 
 
         
+
 
 

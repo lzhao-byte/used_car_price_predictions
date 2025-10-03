@@ -28,7 +28,6 @@ def fetch_data(snow_session=None,
                ref_name="test_ref_make_model",
                use_local=True):
     if use_local:
-        if use_local:
         try:
             df = pl.read_parquet("data/vehicles.parquet")
         except:
@@ -44,3 +43,4 @@ def fetch_data(snow_session=None,
     
 
     return df, ref, words
+

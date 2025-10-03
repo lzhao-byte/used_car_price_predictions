@@ -203,13 +203,20 @@ class DataPrep:
                 drop_cols, strict=False
             ).with_columns(
                 [pl.col(col).fill_null("other") for col in fill_other_cols]
-            ).with_columns(
+            )
+        try:
+            dfc = dfc..with_columns(
                 pl.col('cylinders').str.replace(" cylinders", "").alias('cylinders')
             ).with_columns(
                 pl.when(pl.col('cylinders')!='other').then(pl.col('cylinders'))
                 .fill_null(pl.col('cylinders').drop_nulls().mode())
                 .cast(pl.Int64).alias('cylinders')
             )
+        except:
+            dfc = dfc.with_columns(
+                pl.col('cylinders').full_null(pl.col('cylinders').drop_nulls().mode())
+            )
+                
        
         self.clean = dfc
 
@@ -331,3 +338,4 @@ class DataPrep:
 
 
         
+

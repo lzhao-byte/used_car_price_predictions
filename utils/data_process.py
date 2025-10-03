@@ -200,7 +200,7 @@ class DataPrep:
         dfc = df.drop_nulls(
             subset=dropna_cols
             ).drop(
-                drop_cols
+                drop_cols, strict=False
             ).with_columns(
                 [pl.col(col).fill_null("other") for col in fill_other_cols]
             ).with_columns(
@@ -328,5 +328,6 @@ class DataPrep:
             )
 
         return dfc
+
 
         

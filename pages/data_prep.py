@@ -6,7 +6,7 @@ st.subheader("Data Cleaning", divider=True)
 st.markdown("In this section, you may clean data, select attributes.")
 
 
-def prep_clean_data(df, ref, words):
+def prep_clean_data(df, ref, words=None):
     config_options={'height': 400}
     data_cleanser = DataPrep(df, ref, words)
     with st.expander("Correct Data Types"):
@@ -159,6 +159,7 @@ if __name__ == "__main__":
         ref = st.session_state.ref
         words = st.session_state.words
 
-        prep_clean_data(df, ref, words)
+        prep_clean_data(df, ref, words=None)
+
 
 

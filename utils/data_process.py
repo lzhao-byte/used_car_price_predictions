@@ -282,7 +282,7 @@ class DataPrep:
 
         if self.ref is not None:
             ### reference make model
-            non_essentials = "|".join(sorted(self.words['words'].unique()))
+            non_essentials = "|".join(sorted(self.words['words'].unique())) if self.words is not None else ''
             refx = self.ref.with_columns(
                     pl.col('model')
                     .str.replace(r"\s*\([^)]*\)", "")
@@ -338,6 +338,7 @@ class DataPrep:
 
 
         
+
 
 
 

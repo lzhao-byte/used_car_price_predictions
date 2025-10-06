@@ -159,7 +159,8 @@ if __name__ == "__main__":
         ref = st.session_state.ref
         words = st.session_state.words
 
-        prep_clean_data(df, ref, words=None)
+        prep_clean_data(df, ref, words=words)
+
 
 
 

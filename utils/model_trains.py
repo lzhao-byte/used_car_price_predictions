@@ -57,7 +57,7 @@ class ModelBuilder():
 
 
     def _random_forest(self, tune=False, metric='mse'):
-        model = RandomForestRegressor(n_estimators=50, max_depth=7, min_samples_leaf=10)
+        model = RandomForestRegressor(n_estimators=50, max_depth=6, min_samples_leaf=10)
         if tune:
             paras = {
                 "n_estimators": range(50, 300, 50),
@@ -335,7 +335,6 @@ class ModelBuilder():
     def _plot_tree(self):
         tree_r = self.model
         fig, ax = plt.subplots(figsize=(10,4))
-        print(self.name)
         if self.name == 'decision_tree':
             tree.plot_tree(tree_r, max_depth=3, 
                             feature_names=self.features, 
@@ -352,7 +351,10 @@ class ModelBuilder():
                             precision=2,
                             ax=ax)
         elif self.name == 'xgboost':
-            xgb.plot_tree(tree_r, num_tree=1, ax=ax)
+            try:
+                xgb.plot_tree(tree_r, num_tree=1, ax=ax)
+            except Exception as e:
+                return f'Error: {e}. Unable to display model structure due to system limits.'
         else:
             pass
         return fig
@@ -361,11 +363,11 @@ class ModelBuilder():
     def _plot_feature_importance(self):
         fig, ax = plt.subplots(figsize=(10,4))
         imp = permutation_importance(self.pipe, 
-                                     self.input['x_train'], 
-                                     self.input['y_train'])
+                                     self.input['x_test'], 
+                                     self.input['y_test'])
         sorted_imp_index = imp.importances_mean.argsort()
         ticklabels = {
-            "tick_labels": self.input['x_train'].columns[sorted_imp_index]
+            "tick_labels": self.input['x_test'].columns[sorted_imp_index]
         }
         ax.boxplot(imp.importances[sorted_imp_index].T, vert=False, **ticklabels)
         ax.axvline(x=0, color="k", linestyle="--")
@@ -435,4 +437,5 @@ class ModelBuilder():
             "Median": np.median(dt)
 
         }
+
 

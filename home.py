@@ -44,12 +44,24 @@ def reset_all_warning():
 def main():
     st.set_page_config(layout="wide")
     st.title("Intro to Predictive Analytics")
-    desc = """This app guides you through the key stages of a typical predictive analytics workflow.
-        Data Explorer: Understand your dataset by visualizing distributions, identifying patterns, and spotting potential issues like missing values or outliers.
-        Data Prep: Prepare your data for modeling by handling missing values, correcting data types, and removing inconsistencies.
-        Feature Engineering: Transform raw data into meaningful features through encoding, scaling, and feature selection to improve model performance.
-        Model Training: Train and evaluate different machine learning models using your processed data, and compare their performance to select the best one.
-        Model Deployment & Monitoring: Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time."""
+    desc = """
+    This app guides you through the key stages of a typical **predictive analytics pipeline**, helping you build and evaluate machine learning models step by step:
+
+    - **Data Explorer**  
+    Understand your dataset by visualizing distributions, identifying patterns, and spotting potential issues like missing values or outliers.
+
+    - **Data Prep**  
+    Prepare your data for modeling by handling missing values, correcting data types, and removing inconsistencies.
+
+    - **Feature Engineering**  
+    Transform raw data into meaningful features through encoding, scaling, and feature selection to improve model performance.
+
+    - **Model Training**  
+    Train and evaluate different machine learning models using your processed data, and compare their performance to select the best one.
+
+    - **Monitor Simulating**  
+    Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time.
+    """
     st.markdown(desc)
 
     load_col, reset_col, _ = st.columns([1,1,3])

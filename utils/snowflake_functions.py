@@ -3,6 +3,8 @@ from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark import Session
 import os
 import polars as pl
+import numpy as np 
+
 
 def get_snow_session(database, schema, warehouse):
     user = os.environ.get("SNOWFLAKE_USER")
@@ -32,13 +34,14 @@ def fetch_data(snow_session=None,
         try:
             df = pl.read_parquet("data/vehicles.parquet")
             df = df.with_columns(
-                [pl.col(col).cast(pl.Float32) for col in df.columns if df[col].dtype in ([pl.Int64, pl.Float64])]
+                [pl.col(col).fill_null(np.nan) for col in df.columns if df[col].dtype in ([pl.Int64, pl.Float64])]
             )
         except:
             df = pl.scan_parquet("data/**/*.parquet", hive_partitioning=True).collect()
             df = df.with_columns(
-                [pl.col(col).cast(pl.Float32) for col in df.columns if df[col].dtype in ([pl.Int64, pl.Float64])]
+                [pl.col(col).fill_null(np.nan) for col in df.columns if df[col].dtype in ([pl.Int64, pl.Float64])]
             )
+
         ref = pl.read_csv("data/make_model.csv")
         words = pl.read_csv("data/words.csv")
     else:

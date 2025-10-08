@@ -48,24 +48,9 @@ def main():
     This app guides you through the key stages of a typical **predictive analytics pipeline**. Load the data and click a step on the sidebar to explore.
     """
     st.markdown(desc)
-   
+    
     load_col, reset_col, _ = st.columns([1,1,3])
-    if load_col.button("Load Data", use_container_width=True):
-        if 'data' not in st.session_state:
-            df, ref, words = fetch_data(use_local=True)
-            st.session_state['data'] = {}
-            st.session_state['data']['raw'] = df
-            st.session_state['ref'] = ref
-            st.session_state['words'] = words
-        st.toast("Success.")
-    
-    if reset_col.button("Reset All", use_container_width=True):
-        reset_all_warning()
-    
-    setup_page()
-    
-    st.sidebar.divider()
-     
+
     side_desc = """
     - **Data Explorer**  
     Understand your dataset by visualizing distributions, identifying patterns, and spotting potential issues like missing values or outliers.
@@ -82,10 +67,23 @@ def main():
     - **Monitor Simulating**  
     Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time.
     """
-    with st.sidebar.expander("About the Pages"):
+    with st.expander("About the Pages"):
         st.markdown(side_desc)
 
-
+    if load_col.button("Load Data", use_container_width=True):
+        if 'data' not in st.session_state:
+            df, ref, words = fetch_data(use_local=True)
+            st.session_state['data'] = {}
+            st.session_state['data']['raw'] = df
+            st.session_state['ref'] = ref
+            st.session_state['words'] = words
+        st.toast("Success.")
+    
+    if reset_col.button("Reset All", use_container_width=True):
+        reset_all_warning()
+    
+    setup_page()
+    
 
 if __name__ == "__main__":
     main()

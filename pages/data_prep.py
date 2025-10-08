@@ -2,11 +2,9 @@ import streamlit as st
 from utils.data_process import *
 
 
-st.subheader("Data Cleaning", divider=True)
-st.markdown("In this section, you may clean data, select attributes.")
-
-
 def prep_clean_data(df, ref, words=None):
+    st.subheader("Data Cleaning", divider=True)
+
     config_options={'height': 400}
     data_cleanser = DataPrep(df, ref, words)
     with st.expander("Correct Data Types"):

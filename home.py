@@ -66,7 +66,8 @@ def main():
     
     st.sidebar.divider()
      
-    side_desc = """- **Data Explorer**  
+    side_desc = """
+    - **Data Explorer**  
     Understand your dataset by visualizing distributions, identifying patterns, and spotting potential issues like missing values or outliers.
 
     - **Data Prep**  
@@ -81,7 +82,7 @@ def main():
     - **Monitor Simulating**  
     Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time.
     """
-    with st.sidebar.expander("About"):
+    with st.sidebar.expander("About the Pages"):
         st.markdown(side_desc)
 
 

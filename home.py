@@ -81,7 +81,8 @@ def main():
     - **Monitor Simulating**  
     Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time.
     """
-    st.sidebar.markdown(f":small[{side_desc}]")
+    with st.sidebar.expander("About"):
+        st.markdown(side_desc)
 
 
 

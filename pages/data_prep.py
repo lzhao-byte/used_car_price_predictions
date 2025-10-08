@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.data_process import *
+from utils.data_process import DataPrep
 
 
 def prep_clean_data(df, ref, words=None):

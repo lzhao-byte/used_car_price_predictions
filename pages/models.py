@@ -18,8 +18,8 @@ def model_training(df):
         This is especially crucial in supervised learning, 
         where the model learns patterns from the training data and is then evaluated on the test data.
         The test set remains completely separate from the training process, providing a more realistic estimate of how the model will perform on new, unseen data.
-        This helps ensure that the model generalizes well and doesn't just memorize the training examples.
-        In the past, the size of the test set was a major consideration due to limited data availability. 
+        This helps ensure that the model generalizes well and doesn't just memorize the training examples.""")
+        st.caption("""In the past, the size of the test set was a major consideration due to limited data availability. 
         However, with the increasing accessibility of large datasets, 
         the impact of test size on model performance has become less critical. 
         Still, it's important to maintain a reasonable split 
@@ -38,12 +38,12 @@ def model_training(df):
         Encoding is the process of converting these categorical values into numbers so that models can interpret and learn from them. 
         Different models may prefer different encoding techniques. 
         For example, some models (like decision trees) can handle label encoding well, 
-        while others (like linear models) may perform better with one-hot encoding. 
-        Although some modern algorithms can handle categorical data internally, 
+        while others (like linear models) may perform better with one-hot encoding. """)
+        st.caption("""Although some modern algorithms can handle categorical data internally, 
         it's generally a good practice to include encoding as part of your data preprocessing pipeline. 
         This gives you more control over how categories are represented and ensures consistency across training and prediction.
          Below are two commonly used encoding methods, among others: 
-         Label Encoding assigns a unique number to each category. One-Hot Encoding creates a new binary column 
+         Label Encoding assigns a unique number to each category, One-Hot Encoding creates a new binary column 
          for each category.""")
         sel_train_opt = st.radio("Select an Encoding Method",
                              options=[
@@ -82,7 +82,7 @@ def model_training(df):
                     )
     # scale_target = st.checkbox("Scale Target")
     with st.expander("Hyperparameter Tuning"):
-        st.caption("""hyperparameters are settings or configurations that you choose before training a model. 
+        st.caption("""Hyperparameters are settings or configurations that you choose before training a model. 
         They are not learned from the data — instead, they control how the learning process happens.""")
         st.caption("""Choosing the right hyperparameters can make a huge difference in how well your model performs. 
         Multiple tuning methods are available, in this app, random search is done when hyperparameter tuning is enabled.""")

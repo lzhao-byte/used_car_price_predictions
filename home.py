@@ -64,6 +64,7 @@ def main():
     
     setup_page()
     
+    st.sidebar.divider()
      
     side_desc = """
     - **Data Explorer**  
@@ -81,7 +82,7 @@ def main():
     - **Monitor Simulating**  
     Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time.
     """
-    st.sidebar.markdown(side_desc)
+    st.sidebar.markdown(f":small[{side_desc}]")
 
 
 

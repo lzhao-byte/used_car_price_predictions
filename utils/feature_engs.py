@@ -14,7 +14,7 @@ class FeatureEng:
 
 
     def show_samples(self, nsamples=10):
-        return self.final.sample(nsamples).to_pandas(use_pyarrow_extension_array=False)
+        return self.final.sample(nsamples)
     
 
     def get_columns(self):

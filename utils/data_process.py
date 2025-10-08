@@ -22,13 +22,13 @@ class DataPrep:
         self.words = words
     
     def show_schema(self):
-        return pl.DataFrame(self.clean.schema).to_pandas(use_pyarrow_extension_array=False)
+        return pl.DataFrame(self.clean.schema)
     
 
     def show_sample_values(self):
         cols = [col for col in self.clean.columns 
                 if self.clean.select(pl.col(col)).count().item() != 0]
-        return self.clean.drop_nulls(subset=cols).head(5).to_pandas(use_pyarrow_extension_array=False)
+        return self.clean.drop_nulls(subset=cols).head(5)
     
 
     def show_sample_col_values(self, col=None):

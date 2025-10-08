@@ -7,6 +7,6 @@ rapidfuzz==3.14.1
 scikit_learn==1.7.2
 snowflake_connector_python
 snowflake_snowpark_python
-streamlit==1.50.1
+streamlit==1.49.0
 xgboost==3.0.5
 

@@ -66,8 +66,7 @@ def main():
     
     st.sidebar.divider()
      
-    side_desc = """
-    - **Data Explorer**  
+    side_desc = """- **Data Explorer**  
     Understand your dataset by visualizing distributions, identifying patterns, and spotting potential issues like missing values or outliers.
 
     - **Data Prep**  

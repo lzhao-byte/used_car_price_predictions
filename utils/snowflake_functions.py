@@ -36,6 +36,9 @@ def fetch_data(snow_session=None,
             )
         except:
             df = pl.scan_parquet("data/**/*.parquet", hive_partitioning=True).collect()
+            df = df.with_columns(
+                [pl.col(col).cast(pl.Float64) for col in df.columns if df[col].dtype==pl.Int64]
+            )
         ref = pl.read_csv("data/make_model.csv")
         words = pl.read_csv("data/words.csv")
     else:
@@ -49,6 +52,7 @@ def fetch_data(snow_session=None,
     
 
     return df, ref, words
+
 
 
 

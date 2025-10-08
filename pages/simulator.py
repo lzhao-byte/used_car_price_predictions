@@ -99,6 +99,17 @@ def update_data_model(data_container, model_container, stats_container,
 
 
 if __name__ == "__main__":
+    st.caption("""Once a machine learning model is trained and validated, 
+    the next step is deployment—making the model available to generate predictions on new, real-world data. 
+    In this page, you can simulate how the model performs on incoming data by uploading new inputs and 
+    viewing the predicted results.""")
+    st.caption("""Note that deployment is not the end of the journey. 
+    Over time, the data your model sees in production may change—a phenomenon known as data drift. 
+    This can lead to a drop in model performance. That's why monitoring is essential. This page shows a small demo on 
+    how you may monitor your model by continuous evaluating model performance, and comparing new and training data that may indicate data drift.
+    Regular monitoring ensures your model continues to perform well and helps you decide when it might be time to retrain or update it.
+    """)
+
     st.subheader("Monitoring (Simulation)", divider=True)
 
     if 'model' not in st.session_state:

@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.data_explorer import DataExp
 import numpy as np
-
+import polars as pl
 
 def generate_visuals(df):
     st.subheader("Exploration", divider=True)

@@ -14,7 +14,7 @@ def model_training(df):
 
     
     with st.expander("Train/Test Split"):
-        st.caption("Generally, after your data is clean, the next thing you want to do is to split data into training and test set. This step especially critical in supervised learning, since you will have training set to train the model, and the test set remains separate from model training process to provide a more realistic value of your model performance as if it were given a complete new collected data.")
+        st.caption("Generally, after your data is clean, the next thing you want to do is to split data into training and test set. This step is especially critical in supervised learning, since you will have training set to train the model, and the test set remains separate from model training process to provide a more realistic view of your model performance as if it were given a complete new collected data. Traditionally test size matters a lot due to data size, but with larger and larger data set available at lower cost, the influence of test size over model performance is shrinking.")
         test_size = st.radio("Select a test size for evalution",
                             options=[0.3, 0.2, 0.1],
                             index=1,
@@ -22,7 +22,7 @@ def model_training(df):
                             format_func=lambda x: f"{x*100:.0f}%")
 
     with st.expander("Encoding Categorical Variables"):
-        st.caption('Encoding is key when you have categorical variables since most models require numbers as input. Different models may require or work better with certain encoding methods, some modern models can handle encoding internally. Generally it is better to have encoding in your modeling pipeline so you have a better control over how you would like to convert categories/text into numbers.')
+        st.caption('Encoding is key when you have categorical variables in the input data set since most models require numbers as input to be able to evaluate similarities/differences among the observations. Different models may require or work better with certain encoding methods, some modern models can also handle encoding internally. Generally it is a better practice to have encoding in your modeling pipeline so that you have a better control over how you would like to convert categories/text into numbers. Below are two commonly used encoding methods among others.')
         sel_train_opt = st.radio("Select an Encoding Method",
                              options=[
                                  "one-hot",
@@ -33,7 +33,8 @@ def model_training(df):
                             )
 
     with st.expander("Model Selection"):
-        st.caption('The models shown here are some examples that you can select from a wide range of regression/classification algorithms. In practical, you can have a list of models and compare them against predefined performance metrics, then select the best model as your final production model. Optionally, you can also leverage the advantages of different types of models and ensemble them into a better performed model.')
+        st.caption('The models shown here are some examples that you can select from a wide range of regression/classification algorithms. In practical, you can have a list of models and compare them against predefined performance metrics, then select the best model as your final production model. Alternatively, you can also leverage advantages of different types of models and ensemble them into a better performed model.')
+        st.caption('You may also want to pay attention to the inner logic of different algorithms should you design your own pipeline. For example, nearest neighbors rely heavily on calculating pairwise distance among observations, while tree-based models handles categorical variable well.')
         sel_model = st.radio("Select a Model",
                       options=[
                           "linear",

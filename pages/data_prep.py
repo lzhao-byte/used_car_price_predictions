@@ -144,6 +144,11 @@ def prep_clean_data(df, ref, words=None):
 
 
 if __name__ == "__main__":
+    st.caption(
+        "This section focuses on preparing your data for modeling. Data preparation includes tasks like handling missing values, correcting data types, and ensuring consistency across features. "
+        "Clean and well-prepared data is essential for building reliable and accurate machine learning models."
+    )
+
     if 'data' not in st.session_state:
         st.toast("No Data Available. Load Data First.")
     else:

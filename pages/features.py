@@ -53,6 +53,12 @@ def tweak_features(df):
 
 
 if __name__ == "__main__":
+    st.caption(
+        "In this section, you can create new features or transform existing ones to help your model learn more effectively. "
+        "Feature engineering is a key step in improving model performance by making patterns in the data more accessible to algorithms. "
+        "Common tasks include encoding categorical variables, scaling numerical values, and selecting the most relevant features."
+    )
+
     if 'data' not in st.session_state:
         st.toast("No Data Available. Load Data First.")
     elif 'clean' not in st.session_state.data:

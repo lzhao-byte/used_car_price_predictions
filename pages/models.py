@@ -4,7 +4,6 @@ from utils.model_trains import *
 
 def model_training(df):
     st.subheader("Model Training", divider=True)
-    st.markdown("In this section, you may select algorithm, train model, etc.")
 
     with st.expander("Sample Input"):
         st.dataframe(df)
@@ -125,6 +124,11 @@ def model_training(df):
 
 
 if __name__ == "__main__":
+    st.caption(
+        "Model training is the process where the algorithm learns patterns from the training data to make predictions. "
+        "In this section, you can select a machine learning algorithm and train a model using your prepared dataset. "
+        "You may compare different models based on their performance and choose the one that best fits your problem."
+    )
     if 'data' not in st.session_state:
         st.toast("No Data Available. Load Data First.")
     elif 'final' not in st.session_state.data:

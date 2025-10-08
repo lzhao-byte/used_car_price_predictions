@@ -2,13 +2,9 @@ import streamlit as st
 from utils.data_explorer import *
 import numpy as np
 
-st.subheader("Exploration", divider=True)
-st.markdown("In this section, you may visualize patterns, explore relationships for an overview of the data.")
-
-
-
 
 def generate_visuals(df):
+    st.subheader("Exploration", divider=True)
     config_options = {'height': 500}
     data_explorer = DataExp(df)
     cols = [col for col in df.columns if df[col].dtype in (pl.Int64, pl.Float64) or df[col].n_unique() <= 50]
@@ -112,15 +108,12 @@ def generate_visuals(df):
 
 
 
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
+    st.caption(
+        "Use this section to explore and understand your dataset before modeling. Data exploration helps you identify patterns, spot anomalies, and gain insights into the structure and quality of your data. "
+        "This step is essential for making informed decisions during data cleaning, feature engineering, and model selection."
+    )
+
     if 'data' not in st.session_state:
         st.toast("No Data Available. Load Data First.")
     else:

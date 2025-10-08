@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.model_trains import *
+from utils.model_trains import ModelBuilder
 
 
 def model_training(df):

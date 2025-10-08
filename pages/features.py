@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.feature_engs import *
+from utils.feature_engs import FeatureEng
 
 
 def tweak_features(df):

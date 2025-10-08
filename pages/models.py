@@ -14,7 +14,18 @@ def model_training(df):
 
     
     with st.expander("Train/Test Split"):
-        st.caption("Generally, after your data is clean, the next thing you want to do is to split data into training and test set. This step is especially critical in supervised learning, since you will have training set to train the model, and the test set remains separate from model training process to provide a more realistic view of your model performance as if it were given a complete new collected data. Traditionally test size matters a lot due to data size, but with larger and larger data set available at lower cost, the influence of test size over model performance is shrinking.")
+        st.caption("""Once your data is clean, the next important step is to split it into training and test sets. 
+        This is especially crucial in supervised learning, 
+        where the model learns patterns from the training data and is then evaluated on the test data.
+        The test set remains completely separate from the training process, providing a more realistic estimate of how the model will perform on new, unseen data.
+        This helps ensure that the model generalizes well and doesn't just memorize the training examples.
+        In the past, the size of the test set was a major consideration due to limited data availability. 
+        However, with the increasing accessibility of large datasets, 
+        the impact of test size on model performance has become less critical. 
+        Still, it's important to maintain a reasonable split 
+        (commonly 70–80% for training and 20–30% for testing) to ensure that the model isn't 
+        just memorizing the training data but can also make accurate predictions on new inputs.
+        """)
         test_size = st.radio("Select a test size for evalution",
                             options=[0.3, 0.2, 0.1],
                             index=1,
@@ -22,7 +33,18 @@ def model_training(df):
                             format_func=lambda x: f"{x*100:.0f}%")
 
     with st.expander("Encoding Categorical Variables"):
-        st.caption('Encoding is key when you have categorical variables in the input data set since most models require numbers as input to be able to evaluate similarities/differences among the observations. Different models may require or work better with certain encoding methods, some modern models can also handle encoding internally. Generally it is a better practice to have encoding in your modeling pipeline so that you have a better control over how you would like to convert categories/text into numbers. Below are two commonly used encoding methods among others.')
+        st.caption("""Many machine learning models require numerical input to process data effectively. 
+        However, real-world datasets often include categorical variables—such as names, colors, or categories—that are represented as text. 
+        Encoding is the process of converting these categorical values into numbers so that models can interpret and learn from them. 
+        Different models may prefer different encoding techniques. 
+        For example, some models (like decision trees) can handle label encoding well, 
+        while others (like linear models) may perform better with one-hot encoding. 
+        Although some modern algorithms can handle categorical data internally, 
+        it's generally a good practice to include encoding as part of your data preprocessing pipeline. 
+        This gives you more control over how categories are represented and ensures consistency across training and prediction.
+         Below are two commonly used encoding methods, among others: 
+         Label Encoding assigns a unique number to each category. One-Hot Encoding creates a new binary column 
+         for each category.""")
         sel_train_opt = st.radio("Select an Encoding Method",
                              options=[
                                  "one-hot",
@@ -33,8 +55,19 @@ def model_training(df):
                             )
 
     with st.expander("Model Selection"):
-        st.caption('The models shown here are some examples that you can select from a wide range of regression/classification algorithms. In practical, you can have a list of models and compare them against predefined performance metrics, then select the best model as your final production model. Alternatively, you can also leverage advantages of different types of models and ensemble them into a better performed model.')
-        st.caption('You may also want to pay attention to the inner logic of different algorithms should you design your own pipeline. For example, nearest neighbors rely heavily on calculating pairwise distance among observations, while tree-based models handles categorical variable well.')
+        st.caption("""The models displayed here are examples from a wide range of regression and classification algorithms 
+        you can choose from. In practice, it is common to experiment with multiple models and 
+        evaluate their performance using predefined metrics, such as accuracy, precision, recall, or RMSE. 
+        This comparison helps identify the model that performs best for your specific problem and dataset, 
+        which can then be selected as the final production model. 
+        Alternatively, you might combine the strengths of different models using 
+        ensemble techniques to achieve better overall performance.""")
+        st.caption("""It is also important to understand the underlying mechanics of each algorithm, 
+        especially when designing a custom machine learning pipeline. 
+        For instance, k-nearest neighbors (KNN) relies heavily on calculating distances between data points, 
+        making it sensitive to feature scaling. In contrast, 
+        tree-based models (like decision trees or random forests) handle categorical variables 
+        well and are less affected by feature scaling.""")        
         sel_model = st.radio("Select a Model",
                       options=[
                           "linear",
@@ -47,9 +80,14 @@ def model_training(df):
                         horizontal=True,
                         format_func=lambda x: x.replace("_", " ").title(),
                     )
-     
     # scale_target = st.checkbox("Scale Target")
-    enable_tuning = st.checkbox("Enable Hyperparameter Tuning")
+    with st.expander("Hyperparameter Tuning"):
+        st.caption("""hyperparameters are settings or configurations that you choose before training a model. 
+        They are not learned from the data — instead, they control how the learning process happens.""")
+        st.caption("""Choosing the right hyperparameters can make a huge difference in how well your model performs. 
+        Multiple tuning methods are available, in this app, random search is done when hyperparameter tuning is enabled.""")
+        st.caption('*It will usually take a while with hyperparameter tuning on, due to a range of parameters to be tested.*')
+        enable_tuning = st.checkbox("Enable Hyperparameter Tuning")
 
 
     if st.button("Train"):

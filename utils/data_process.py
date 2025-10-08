@@ -22,7 +22,7 @@ class DataPrep:
         self.words = words
     
     def show_schema(self):
-        return pl.DataFrame(self.clean.schema)
+        return self.clean.schema
     
 
     def show_sample_values(self):

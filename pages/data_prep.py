@@ -12,7 +12,7 @@ def prep_clean_data(df, ref, words=None):
     with st.expander("Correct Data Types"):
         st.divider()
         st.markdown("Current schema:")
-        st.dataframe(data_cleanser.show_schema())
+        st.write(data_cleanser.show_schema())
         st.markdown("Sample rows: ")
         st.dataframe(data_cleanser.show_sample_values())
 

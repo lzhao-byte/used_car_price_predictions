@@ -32,10 +32,10 @@ def fetch_data(snow_session=None,
                use_local=True):
     if use_local:
         try:
-            df = pl.read_parquet("data/vehicles.parquet")
+            df = pl.read_parquet("data/vehicles.parquet").drop('price_quantile_bin', strict=False)
 
         except:
-            df = pl.scan_parquet("data/**/*.parquet", hive_partitioning=True).collect()
+            df = pl.scan_parquet("data/**/*.parquet", hive_partitioning=True).drop('price_quantile_bin', strict=False).collect()
 
         ref = pl.read_csv("data/make_model.csv")
         words = pl.read_csv("data/words.csv")

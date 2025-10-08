@@ -45,8 +45,11 @@ def main():
     st.set_page_config(layout="wide")
     st.title("Intro to Predictive Analytics")
     desc = """
-    This app guides you through the key stages of a typical **predictive analytics pipeline**, helping you build and evaluate machine learning models step by step:
-
+    This app guides you through the key stages of a typical **predictive analytics pipeline**. Load the data and click a step on the sidebar to explore.
+    """
+    st.markdown(desc)
+    
+    side_desc = """
     - **Data Explorer**  
     Understand your dataset by visualizing distributions, identifying patterns, and spotting potential issues like missing values or outliers.
 
@@ -62,7 +65,7 @@ def main():
     - **Monitor Simulating**  
     Simulate predictions on new data, visualize prediction accuracy, and monitor for data drift to ensure your model remains reliable over time.
     """
-    st.markdown(desc)
+    st.sidebar.markdown(side_desc)
 
     load_col, reset_col, _ = st.columns([1,1,3])
     if load_col.button("Load Data", use_container_width=True):

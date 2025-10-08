@@ -400,7 +400,7 @@ class ModelBuilder():
 
     def _show_structure(self):
         feature_names = self.pipe.named_steps['transformer'].get_feature_names_out()
-        right_hand_side = "+".join([f"{coef:.0f} \cdot x_{{{fea.replace('_',' ').lower()}}}" for fea, coef in zip(feature_names, self.model.coef_)])
+        right_hand_side = "+".join([f"{coef:.0f} \\cdot x_{{{fea.replace('_',' ').lower()}}}" for fea, coef in zip(feature_names, self.model.coef_)])
         model_str = f"""Linear Model Equation:\n\n $y={right_hand_side}$."""
         return model_str
     

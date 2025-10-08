@@ -14,7 +14,7 @@ class FeatureEng:
 
 
     def show_samples(self, nsamples=10):
-        return self.final.sample(nsamples)
+        return self.final.sample(nsamples).to_pandas(use_pyarrow_extension_array=False)
     
 
     def get_columns(self):
@@ -74,7 +74,7 @@ class FeatureEng:
             'new': 6 
         }
         self.final = df.with_columns(
-            pl.col("condition").replace(conditions, return_dtype=pl.Int64).alias('condition_num')
+            pl.col("condition").replace(conditions, return_dtype=pl.Float64).alias('condition_num')
         )
 
 

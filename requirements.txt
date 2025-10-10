@@ -5,7 +5,8 @@ plotly==6.3.0
 polars==1.34.0
 rapidfuzz==3.14.1
 scikit_learn==1.7.2
-snowflake_connector_python=3.18.0
-snowflake_snowpark_python=1.39.1
+snowflake_connector_python==3.18.0
+snowflake_snowpark_python==1.39.1
 streamlit==1.47.0
 xgboost==3.0.5
+

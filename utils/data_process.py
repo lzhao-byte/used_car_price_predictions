@@ -37,9 +37,12 @@ class DataPrep:
             col = random.choice(cols)
         try:
             samples = self.clean[col].value_counts().sort(by='count', descending=True).sample(25).to_series()
+            results = "Column **" + col.title() + "**\n\n" + " || ".join(samples)
         except:
             samples = self.clean[col].value_counts().sort(by='count', descending=True).to_series()
-        return "Column **" + col.title() + "**\n\n" + " || ".join(samples)
+            results = "Column **" + col.title() + "**\n\n" + " || ".join(samples) if samples is not None else ""
+        finally:
+            return results
 
 
     def select_cols(self, cols):
@@ -338,6 +341,7 @@ class DataPrep:
 
 
         
+
 
 
 

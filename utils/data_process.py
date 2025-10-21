@@ -36,9 +36,9 @@ class DataPrep:
             cols = [col for col in self.clean.columns if self.clean[col].dtype not in (pl.Int64, pl.Float64, pl.Float32, pl.Datetime)]
             col = random.choice(cols)
         try:
-            samples = self.clean[col].value_counts().sort(by='count', descending=True).dropna().sample(25).to_series()
+            samples = self.clean[col].drop_nulls().value_counts().sort(by='count', descending=True).sample(25).to_series()
         except:
-            samples = self.clean[col].value_counts().sort(by='count', descending=True).dropna().to_series()
+            samples = self.clean[col].drop_nulls().value_counts().sort(by='count', descending=True).to_series()
         finally:
             results = "Column **" + col.title() + "**\n\n" + " || ".join(samples)
             return results
@@ -340,6 +340,7 @@ class DataPrep:
 
 
         
+
 
 
 

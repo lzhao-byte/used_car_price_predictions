@@ -4,7 +4,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 from itertools import combinations
+import streamlit as st
 
+
+@st.cache_resource
 class DataExp:
     df = None
 
@@ -167,4 +170,5 @@ class DataExp:
                 y = target_col,
                 log_y=log_target,
             )
+
         return fig

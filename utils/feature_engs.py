@@ -3,7 +3,10 @@ import plotly.express as px
 import polars as pl
 import numpy as np
 
+import streamlit as st
 
+
+@st.cache_resource
 class FeatureEng:
     df = None
     final = None
@@ -114,3 +117,4 @@ class FeatureEng:
             ).then(pl.lit("over"))
             .otherwise("below").alias("price_cutoff")
         )
+

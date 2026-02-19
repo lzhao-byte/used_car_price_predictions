@@ -4,6 +4,7 @@ from snowflake.snowpark import Session
 import os
 import polars as pl
 import numpy as np 
+import streamlit as st
 
 
 def get_snow_session(database, schema, warehouse):
@@ -25,6 +26,8 @@ def get_snow_session(database, schema, warehouse):
     return current_session
 
 
+
+@st.cache_resource
 def fetch_data(snow_session=None, 
                table_name="used_cars",
                ref_name="make_model",
@@ -50,6 +53,7 @@ def fetch_data(snow_session=None,
     
 
     return df, ref, words
+
 
 
 

@@ -8,7 +8,10 @@ from datetime import datetime
 from polars import selectors as ps
 import numpy as np
 
+import streamlit as st
 
+
+@st.cache_resource
 class DataPrep:
     raw = None
     clean = None
@@ -340,6 +343,7 @@ class DataPrep:
 
 
         
+
 
 
 

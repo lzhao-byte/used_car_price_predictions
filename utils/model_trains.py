@@ -37,6 +37,10 @@ from plotly.subplots import make_subplots
 ## basic random search for hyperparameter tuning
 ## Bayesian optimization can also be used
 ## default parameters are used if no tuning is specified
+import streamlit as st
+
+
+@st.cache_resource
 class ModelBuilder():
     input = None
     target = None
@@ -437,5 +441,6 @@ class ModelBuilder():
             "Median": np.median(dt)
 
         }
+
 
 

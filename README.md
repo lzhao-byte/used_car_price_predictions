@@ -14,6 +14,19 @@ An interactive, multi-page Streamlit app that walks non-specialists through the 
 | **Model Training** | Train and compare linear models (Lasso / Ridge / ElasticNet), Random Forest, and XGBoost; view metrics (MAE, RMSE, R²) and predictions |
 | **Monitoring (Simulation)** | Simulate production data over time to show how model performance degrades under data drift, and how you would monitor it |
 
+## How it fits together
+
+```mermaid
+flowchart LR
+  A[(Local Parquet<br/>or Snowflake)] --> B[Data Explorer]
+  B --> C[Data Prep<br/>nulls · outliers · dedup ·<br/>fuzzy make/model matching]
+  C --> D[Feature Engineering]
+  D --> E[Model Training<br/>Lasso/Ridge/ElasticNet · RF · XGBoost]
+  E --> F[Monitoring Simulator<br/>performance decay & drift]
+```
+
+Each page reads and writes shared Streamlit session state, so choices made on one page (such as cleaning rules or selected features) carry through to the rest of the pipeline. The Reset button clears everything.
+
 ## Tech
 
 Python · Streamlit · Polars · scikit-learn · XGBoost · Plotly · RapidFuzz · Snowflake Snowpark (optional backend)

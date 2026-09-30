@@ -48,7 +48,7 @@ def fetch_data(snow_session=None,
         words = snow_session.table(words_name).to_pandas()
 
         df = pl.from_pandas(df).rename(str.lower)
-        ref = pl.from_pandas(df).rename(str.lower)
+        ref = pl.from_pandas(ref).rename(str.lower)
         words = pl.from_pandas(words).rename(str.lower)
     
 

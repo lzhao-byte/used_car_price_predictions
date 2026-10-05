@@ -5,8 +5,6 @@ import re
 import random
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from datetime import datetime
-from polars import selectors as ps
-import numpy as np
 
 import streamlit as st
 
@@ -40,7 +38,7 @@ class DataPrep:
             col = random.choice(cols)
         try:
             samples = self.clean[col].drop_nulls().value_counts().sort(by='count', descending=True).sample(25).to_series()
-        except:
+        except Exception:
             samples = self.clean[col].drop_nulls().value_counts().sort(by='count', descending=True).to_series()
         finally:
             results = "Column **" + col.title() + "**\n\n" + " || ".join(samples)
@@ -117,7 +115,7 @@ class DataPrep:
                 dfc = df.filter(
                     (pl.col('posting_date').dt.year() - pl.col('year')).is_between(1, limits)
                 )
-            except:
+            except Exception:
                 dfc = df.filter(
                     (pl.col('posting_date').str.to_datetime("%Y-%m-%dT%H:%M:%S%z").dt.year() - pl.col('year')).is_between(1, limits)
                 )
@@ -136,7 +134,7 @@ class DataPrep:
                     pl.col(dt_col).str.to_datetime("%Y-%m-%dT%H:%M:%S%z")
                 )
                 self.clean = dfc
-            except:
+            except Exception:
                 pass
 
         if from_data_type=='Number' and to_data_type=='String':
@@ -145,7 +143,7 @@ class DataPrep:
                     pl.col(dt_col).cast(pl.String)
                 )
                 self.clean = dfc
-            except:
+            except Exception:
                 pass
 
 
@@ -217,7 +215,7 @@ class DataPrep:
                 .fill_null(pl.col('cylinders').drop_nulls().mode())
                 .cast(pl.Int64).alias('cylinders')
             )
-        except:
+        except Exception:
             dfc = dfc.with_columns(
                 pl.col('cylinders').fill_null(pl.col('cylinders').drop_nulls().mode())
             )

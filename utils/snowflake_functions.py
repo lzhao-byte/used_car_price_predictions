@@ -1,9 +1,7 @@
-import snowflake.connector
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark import Session
 import os
 import polars as pl
-import numpy as np 
 import streamlit as st
 
 
@@ -13,7 +11,7 @@ def get_snow_session(database, schema, warehouse):
     auth = os.environ.get("SNOWFLAKE_AUTHENTICATOR")
     try:
         current_session = get_active_session()
-    except:
+    except Exception:
         conn_params = {
             'user': user,
             'account': account,
@@ -37,7 +35,7 @@ def fetch_data(snow_session=None,
         try:
             df = pl.read_parquet("data/vehicles.parquet").drop('price_quantile_bin', strict=False)
 
-        except:
+        except Exception:
             df = pl.scan_parquet("data/**/*.parquet", hive_partitioning=True).drop('price_quantile_bin', strict=False).collect()
 
         ref = pl.read_csv("data/make_model.csv")

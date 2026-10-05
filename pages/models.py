@@ -114,7 +114,7 @@ def model_training(df):
                 st.markdown(model._show_structure())
         
         with st.expander("Examine Result"):
-            x_test, y_test = model.input['x_test'], model.input['y_test']
+            y_test = model.input['y_test']
             y_pred = model.predict()
             st.subheader("Metrics", divider=True)
             st.write(model_trainer.evaluate( y_test, y_pred))

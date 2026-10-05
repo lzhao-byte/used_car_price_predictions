@@ -1,5 +1,4 @@
 from sklearn.preprocessing import (
-    PowerTransformer, 
     MinMaxScaler,
     StandardScaler,
     OrdinalEncoder, 
@@ -11,18 +10,17 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.neighbors import KNeighborsRegressor
 import xgboost as xgb
-from sklearn.linear_model import Lasso, ElasticNet, Ridge
+from sklearn.linear_model import Lasso, ElasticNet
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import RandomizedSearchCV, cross_val_score, KFold
 import numpy as np
 import polars as pl
 import time
-from sklearn.compose import ColumnTransformer, TransformedTargetRegressor
+from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import (
     mean_absolute_error, 
     mean_absolute_percentage_error, 
-    mean_squared_error, 
     root_mean_squared_error, 
     r2_score
 )
@@ -30,7 +28,6 @@ from sklearn import tree
 from sklearn.inspection import permutation_importance
 
 import matplotlib.pyplot as plt
-import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
@@ -280,13 +277,13 @@ class ModelBuilder():
             test_size=0.2,
             enable_tuning=False):
         ## encoding
-        yield f"Setting up the feature encoder for categorical variables..."
+        yield "Setting up the feature encoder for categorical variables..."
         self._setup_encoder(train_opt=sel_train_opt)
         time.sleep(0.5)
-        yield f"Setting up the scaler before feeding into the model..."
+        yield "Setting up the scaler before feeding into the model..."
         self._setup_scaler()
         time.sleep(0.5)
-        yield f"Split data into train and test set..."
+        yield "Split data into train and test set..."
         x_train, x_test, y_train, y_test = self._split_data(test_size=test_size)
         time.sleep(0.5)
         yield "Setting up the model..."
@@ -318,7 +315,6 @@ class ModelBuilder():
         y_true = self.input['y_test'] if y_true is None else y_true
         y_pred = self.predict() if y_pred is None else y_pred
         
-        mse = mean_squared_error(y_pred=y_pred, y_true=y_true)
         mae = mean_absolute_error(y_pred=y_pred, y_true=y_true)
         mape = mean_absolute_percentage_error(y_pred=y_pred, y_true=y_true)
         rmse = root_mean_squared_error(y_pred=y_pred, y_true=y_true)

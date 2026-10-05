@@ -1,7 +1,5 @@
 import streamlit as st
-import polars as pl
-import plotly.express as px
-from utils.snowflake_functions import get_snow_session, fetch_data
+from utils.snowflake_functions import fetch_data
 
 def setup_page():
     data_prep = st.Page(

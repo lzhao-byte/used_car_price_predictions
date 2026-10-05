@@ -1,7 +1,6 @@
 from sklearn.cluster import KMeans
 import plotly.express as px
 import polars as pl
-import numpy as np
 
 import streamlit as st
 

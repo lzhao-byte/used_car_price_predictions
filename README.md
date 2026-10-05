@@ -1,5 +1,7 @@
 # Intro to Predictive Analytics (Streamlit)
 
+[![CI](https://github.com/lzhao-byte/used_car_price_predictions/actions/workflows/ci.yml/badge.svg)](https://github.com/lzhao-byte/used_car_price_predictions/actions/workflows/ci.yml)
+
 An interactive, multi-page Streamlit app that walks non-specialists through the full predictive-analytics lifecycle on a used-car price dataset. I built it as a hands-on lab for company-wide data-literacy training ("Data Days").
 
 **Live demo:** https://intro-to-predictive-analytics.streamlit.app
@@ -41,3 +43,13 @@ streamlit run home.py
 ```
 
 You can also open the repo in a GitHub Codespace, which uses the included `.devcontainer`. The app starts automatically.
+
+## Tests
+
+```bash
+pip install -r requirements-dev.txt
+ruff check .
+pytest --cov=utils
+```
+
+60 tests cover the logic in `utils/` (68% line coverage): outlier trimming, null handling, de-duplication, fuzzy make/model standardization, feature engineering, the train/test split (the last 1,000 rows are held out for the drift simulator and must not leak into training), model training and metrics, and the local data loader. They run on small synthetic data, so they need no network, no Snowflake account, and no large Parquet files. The Streamlit pages in `pages/` are not unit-tested; CI runs on Python 3.11 and 3.12 (see `.github/workflows/ci.yml`).

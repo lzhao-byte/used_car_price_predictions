@@ -3,7 +3,6 @@ import plotly.express as px
 from rapidfuzz import process, fuzz
 import re
 import random
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from datetime import datetime
 
 import streamlit as st
@@ -53,9 +52,9 @@ class DataPrep:
         if dtype == 'numeric':
             cols = [col for col in self.clean.columns if self.clean[col].dtype in (pl.Int64, pl.Float64, pl.Float32)]
         elif dtype == 'date':
-            cols = [col for col in self.clean.columns if self.clean[col].dtype in (pl.Datetime)]
+            cols = [col for col in self.clean.columns if self.clean[col].dtype == pl.Datetime]
         elif dtype == 'string':
-            cols = [col for col in self.clean.columns if self.clean[col].dtype in (pl.String)]
+            cols = [col for col in self.clean.columns if self.clean[col].dtype == pl.String]
         else:
             cols = self.clean.columns
         return cols
@@ -157,36 +156,29 @@ class DataPrep:
             dfc = df.drop(col)
         elif 'fill' in method.lower():
             if col == 'type':
+                def drive_token(model):
+                    # first drive-train token in the model name, e.g. "rav4 awd" -> "4wd"
+                    found = re.findall(r'\b(?:awd|4wd|fwd|rwd)\b', model, re.IGNORECASE)
+                    return found[0].lower().replace("awd", "4wd") if found else None
+
                 dfc = df.with_columns(
-                            pl.col('model').map_elements(
-                                lambda x: re.findall(r'\b(?:awd|4wd|fwd|rwd)\b', x, re.IGNORECASE)[0].replace("awd", "4wd"), return_dtype=pl.String
-                            ).alias("drive_from_model")
+                            pl.col('model').map_elements(drive_token, return_dtype=pl.String)
+                            .alias("drive_from_model")
                     ).with_columns(
                         pl.when(pl.col(col).is_null())
                         .then(pl.col('drive_from_model'))
-                        .otherwise(pl.col(col)).alias(pl.col(col))
-                    ).with_columns(pl.col(col).fill_null('other'))
+                        .otherwise(pl.col(col)).alias(col)
+                    ).drop('drive_from_model').with_columns(pl.col(col).fill_null('other'))
             else:
                 dfc = df.with_columns(pl.col(col).fill_null('other'))
         elif 'impute' in method.lower():
             if 'regression' in method.lower():
-                subset = [ocol for ocol in df.columns if ocol not in (col, target_col)]
-                df_impute = df.filter(
-                    pl.col(col).is_not_null()
-                ).with_columns(
-                    [pl.col(scol).fill_null(strategy=pl.col(scol).median()) 
-                     if df[scol].dtype in (pl.Int64, pl.Float64, pl.Int32)
-                     else pl.col(scol).fill_null(pl.col(scol).drop_nulls().mode())
-                     for scol in subset]
-                )
-                rf = RandomForestRegressor() if df[col].dtype in (pl.Int64, pl.Float64, pl.Int32) else RandomForestClassifier()
-                rf.fit(df_impute.select(subset), df_impute.select(col))
-                rf.predict()
-                dfc = df.with_columns(
-                    pl.col(col).fill_null(rf.predict())
-                )
+                raise NotImplementedError("Regression imputation is not implemented; use 'Impute with Mode/Median'.")
             else:
-                strategy = pl.col(col).fill_null(strategy=pl.col(col).median()) if df[col].dtype in (pl.Int64, pl.Float64, pl.Float32) else pl.col(col).fill_null(pl.col(col).drop_nulls().mode())
+                if df[col].dtype in (pl.Int64, pl.Float64, pl.Float32):
+                    strategy = pl.col(col).fill_null(pl.col(col).median())
+                else:
+                    strategy = pl.col(col).fill_null(pl.col(col).drop_nulls().mode().first())
                 dfc = df.with_columns(strategy)
         else:
             dfc = df
@@ -331,7 +323,8 @@ class DataPrep:
                     .when(
                         pl.col('manufacturer').str.split(" ").list.len() == 2
                     ).then(pl.col("matched_model").str.split(" ").list.slice(2,2).list.join(" "))
-                    .otherwise(pl.col("matched_model").str.split(" ").list.slice(1,2).list.join(" ")).alias("model_clean"),
+                    .otherwise(pl.col("matched_model").str.split(" ").list.slice(1,2).list.join(" "))
+                    .str.strip_chars().alias("model_clean"),
                     pl.col("manufacturer").alias("make_clean")
             ).drop(
                 'model_cl', 'matched_model', 'make_model', 'confidence'

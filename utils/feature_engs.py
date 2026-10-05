@@ -101,7 +101,7 @@ class FeatureEng:
 
     def show_feature_dist(self, col):
         fig = px.histogram(
-            self.clean,
+            self.final,
             x = col,
             nbins=50
         )
@@ -109,11 +109,12 @@ class FeatureEng:
 
 
     def recat_target(self, target_col='price', target_cutoff=10000):
-        dfc = self.clean
+        dfc = self.final
         dfc = dfc.with_columns(
             pl.when(
                 pl.col(target_col) >= target_cutoff
             ).then(pl.lit("over"))
-            .otherwise("below").alias("price_cutoff")
+            .otherwise(pl.lit("below")).alias("price_cutoff")
         )
+        self.final = dfc
 

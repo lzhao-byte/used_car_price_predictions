@@ -74,3 +74,17 @@ def test_latlon_groups_figure_plots_every_listing():
     fe.add_features(group_latlon=True)
     fig = fe.show_latlon_groups()
     assert len(fig.data[0].x) == fe.final.height
+
+
+class TestUsesWorkingFrame:
+    """These methods used to raise AttributeError: they referenced self.clean, which FeatureEng does not have."""
+
+    def test_show_feature_dist_plots_the_working_frame(self):
+        fe = FeatureEng(pl.DataFrame({"price": [1.0, 2.0, 3.0]}))
+        fig = fe.show_feature_dist("price")
+        assert fig.data[0].type == "histogram"
+
+    def test_recat_target_adds_the_cutoff_label(self):
+        fe = FeatureEng(pl.DataFrame({"price": [5000.0, 20000.0]}))
+        fe.recat_target(target_cutoff=10000)
+        assert fe.final["price_cutoff"].to_list() == ["below", "over"]
